@@ -15,10 +15,10 @@ describe "Alquimistas Test"{
 		//pocion.agregarMaterial(uni)
 		alquimista.agregarItemDeCombate(bomba)
 		alquimista.agregarItemDeCombate(pocion)
-		assert.equals(20,alquimista.capacidadOfensiva())
-	}
-	test "capacidad de debilitador"{
 		alquimista.agregarItemDeCombate(debilitador)
-		assert.equals(12,debilitador.capacidad())
+		assert.equals(25,alquimista.capacidadOfensiva())
+	}
+	test "Un alquimista es profesional"{
+		assert.that(alquimista.esProfesional())
 	}
 }
