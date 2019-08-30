@@ -1,0 +1,24 @@
+
+import example.*
+
+describe "Alquimistas Test"{
+	test "Un alquimista tiene criterio"{
+		assert.that(alquimista.tieneCriterio())
+	}
+	test "Un alquimista es buen explorador"{
+		alquimista.agregarItemDeRecoleccion("Caña de pescar")
+		alquimista.agregarItemDeRecoleccion("Bolsa de viento mágica")
+		alquimista.agregarItemDeRecoleccion("Red atrapainsectos")
+		assert.that(alquimista.esBuenExplorador())
+	}
+	test "Capacidad Ofensiva de un alquimista"{
+		//pocion.agregarMaterial(uni)
+		alquimista.agregarItemDeCombate(bomba)
+		alquimista.agregarItemDeCombate(pocion)
+		assert.equals(20,alquimista.capacidadOfensiva())
+	}
+	test "capacidad de debilitador"{
+		alquimista.agregarItemDeCombate(debilitador)
+		assert.equals(12,debilitador.capacidad())
+	}
+}
