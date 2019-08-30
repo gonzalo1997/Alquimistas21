@@ -1,6 +1,17 @@
 object alquimista{
 	var itemsDeCombate=[]
 	var itemsDeRecoleccion=[]
+	var todosSusItems = itemsDeCombate + itemsDeRecoleccion
+	
+	method itemsDeCombate(){
+		return itemsDeCombate
+	}
+	method itemsDeRecoleccion(){
+		return itemsDeRecoleccion
+	}
+	method todosSusItems(){
+		return todosSusItems
+	}
 	
 	//PUNTO 1
 	method tieneCriterio(){
@@ -40,26 +51,19 @@ object alquimista{
 	}
 	
 	method calidadPromedio(){
-		return self.calidadTotalDeItemsDeCombate() + self.calidadTotalDeItemsDeRecoleccion()
-		/ self.cantidadDeItemsDeCombate() + self.cantidadDeItemsDeRecoleccion()
+		return self.calidadTotalDeTodosSusItems() / self.cantidadDeTodosSusItems()
 	}
-	method calidadDeItemsDeCombate(){
-		return itemsDeCombate.map({
+	method calidadTotalDeTodosSusItems(){
+		return self.calidadDeTodosSusItems().sum()
+	}
+	method calidadDeTodosSusItems(){
+		return todosSusItems.map({
 			unosItems =>
-				itemsDeCombate.calidad()
+				todosSusItems.calidad()
 		})
 	}
-	method calidadTotalDeItemsDeCombate(){
-		return self.calidadDeItemsDeCombate().sum()
-	}
-	method calidadDeItemsDeRecoleccion(){
-		return itemsDeRecoleccion.map({
-			unosItems =>
-				itemsDeRecoleccion.calidad()
-		})
-	}
-	method calidadTotalDeItemsDeRecoleccion(){
-		return self.calidadDeItemsDeRecoleccion().sum()
+	method cantidadDeTodosSusItems(){
+		return todosSusItems.size()
 	}
 	
 	method todosSusItemsDeCombateSonEfectivos(){
@@ -68,6 +72,7 @@ object alquimista{
 			itemsDeCombate.esEfectivo()
 		})
 	}
+	
 }
 
 //											ITEMS DE COMBATE
@@ -176,12 +181,27 @@ object debilitador{
 	
 	//PUNTO 4
 	method calidad(){
-		return 
+		return self.calidadDelPrimerItemDeMayorCalidad() + self.calidadDelSegundoItemDeMayorCalidad() / 2
+	}
+	method calidadDelPrimerItemDeMayorCalidad(){
+		return self.primerItemDeMayorCalidad().calidad()
+	}
+	method primerItemDeMayorCalidad(){
+		return alquimista.todosSusItems().max({
+			unItem =>
+			unItem.calidad()
+		})
+	}
+	method calidadDelSegundoItemDeMayorCalidad(){
+		return self.segundoItemDeMayorCalidad().calidad()
+	}
+	method segundoItemDeMayorCalidad(){
+		if(self.primerItemDeMayorCalidad())
 	}
 }
 
 
-//												ITEMS DE RECOLECCION
+//												MATERIALES
 
 object florRoja{
 	var property calidad = 30	//PUNTO 4
@@ -204,5 +224,66 @@ object polvora{
 	//PUNTO 1
 	method esMistico(){
 		return false
+	}
+}
+
+
+//											ITEMS DE RECOLECCION
+
+object caniaDePescar{
+	var materiales=[]
+	
+	method calidad(){
+		return 30 + 0.1* self.calidadTotalDeSusMateriales()
+	}
+	method calidadTotalDeSusMateriales(){
+		return self.calidadDeSusMateriales().sum()
+	}
+	method calidadDeSusMateriales(){
+		return materiales.map({
+			unosMateriales =>
+				materiales.calidad()
+		})
+	}
+	method agregarMaterial(unMaterial){
+		return materiales.add(unMaterial)
+	}
+}
+object redAtrapaInsectos{
+	var materiales=[]
+	
+	method calidad(){
+		return 30 + 0.1* self.calidadTotalDeSusMateriales()
+	}
+	method calidadTotalDeSusMateriales(){
+		return self.calidadDeSusMateriales().sum()
+	}
+	method calidadDeSusMateriales(){
+		return materiales.map({
+			unosMateriales =>
+				materiales.calidad()
+		})
+	}
+	method agregarMaterial(unMaterial){
+		return materiales.add(unMaterial)
+	}
+}
+object bolsaDeVientoMagica{
+	var materiales=[]
+	
+	method calidad(){
+		return 30 + 0.1* self.calidadTotalDeSusMateriales()
+	}
+	method calidadTotalDeSusMateriales(){
+		return self.calidadDeSusMateriales().sum()
+	}
+	method calidadDeSusMateriales(){
+		return materiales.map({
+			unosMateriales =>
+				materiales.calidad()
+		})
+	}
+	method agregarMaterial(unMaterial){
+		return materiales.add(unMaterial)
 	}
 }
