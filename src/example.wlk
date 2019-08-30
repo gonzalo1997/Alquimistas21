@@ -73,6 +73,28 @@ object alquimista{
 		})
 	}
 	
+	method calidadDelPrimerItemDeMayorCalidad(){
+		return self.primerItemDeMayorCalidad().calidad()
+	}
+	method primerItemDeMayorCalidad(){
+		return self.todosSusItems().max({
+			unItem =>
+			unItem.calidad()
+		})
+	}
+	method calidadDelSegundoItemDeMayorCalidad(){
+		return self.segundoItemDeMayorCalidad().calidad()
+	}
+	method segundoItemDeMayorCalidad(){
+		return self.todosSusItemsMenosElDeMayorCalidad().max({
+			unItem =>
+			unItem.calidad()
+		})
+	}
+	method todosSusItemsMenosElDeMayorCalidad(){
+		return todosSusItems.remove({self.primerItemDeMayorCalidad()})
+	}
+	
 }
 
 //											ITEMS DE COMBATE
@@ -181,22 +203,7 @@ object debilitador{
 	
 	//PUNTO 4
 	method calidad(){
-		return self.calidadDelPrimerItemDeMayorCalidad() + self.calidadDelSegundoItemDeMayorCalidad() / 2
-	}
-	method calidadDelPrimerItemDeMayorCalidad(){
-		return self.primerItemDeMayorCalidad().calidad()
-	}
-	method primerItemDeMayorCalidad(){
-		return alquimista.todosSusItems().max({
-			unItem =>
-			unItem.calidad()
-		})
-	}
-	method calidadDelSegundoItemDeMayorCalidad(){
-		return self.segundoItemDeMayorCalidad().calidad()
-	}
-	method segundoItemDeMayorCalidad(){
-		if(self.primerItemDeMayorCalidad())
+		return alquimista.calidadDelPrimerItemDeMayorCalidad() + alquimista.calidadDelSegundoItemDeMayorCalidad() / 2
 	}
 }
 
